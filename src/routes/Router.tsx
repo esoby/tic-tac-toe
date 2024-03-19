@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/Home";
 import Setting from "../pages/Setting";
 import Game from "../pages/Game";
@@ -11,7 +11,7 @@ export default function AppRouter() {
       <Route path="/setting" element={<Setting />} />
       <Route path="/game" element={<Game />} />
       <Route path="/history" element={<History />} />
-      <Route path="/*" element={<Home />} />
+      <Route path="*" element={<Navigate replace to="/" />} />
     </Routes>
   );
 }
