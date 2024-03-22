@@ -4,6 +4,7 @@ import PageTitle from "../components/common/PageTitle";
 import styled from "@emotion/styled";
 import Button from "../components/common/Button";
 import PlayerInfo from "../components/Game/PlayerInfo";
+import useTimer from "../\bhooks/useTimer";
 
 const Game = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const Game = () => {
   const [history, setHistory] = useState<number[]>([]);
   const [player1Undo, setPlayer1Undo] = useState(3);
   const [player2Undo, setPlayer2Undo] = useState(3);
-  const [timer, setTimer] = useState(15);
 
   const [currentPlayer, setCurrentPlayer] = useState(() => {
     if (state.firstPlayer === "random") {
@@ -25,19 +25,16 @@ const Game = () => {
 
   const [gameOver, setGameOver] = useState(false);
 
-  // 타이머 로직
-  useEffect(() => {
-    if (!gameOver && timer === 0) {
-      const emptyCells = board.flatMap((cell, index) => (cell === null ? index : []));
-      if (emptyCells.length > 0) {
-        const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        handleCellClick(randomIndex);
-      }
-    } else if (!gameOver && timer > 0) {
-      const id = setTimeout(() => setTimer(timer - 1), 1000);
-      return () => clearTimeout(id);
+  // 타이머 종료 시 처리
+  const onTimeExpired = () => {
+    const emptyCells = board.flatMap((cell, index) => (cell === null ? index : []));
+    if (emptyCells.length > 0) {
+      const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      handleCellClick(randomIndex);
     }
-  }, [timer, gameOver, board]);
+  };
+
+  const { timer, resetTimer } = useTimer(15, gameOver, onTimeExpired);
 
   // 게임 결과 확인
   useEffect(() => {
@@ -136,7 +133,7 @@ const Game = () => {
     setBoard(newBoard);
 
     setCurrentPlayer(currentPlayer === "player1" ? "player2" : "player1");
-    setTimer(15);
+    resetTimer();
   };
 
   // 무르기 버튼 클릭
@@ -162,7 +159,7 @@ const Game = () => {
       setPlayer2Undo((prev) => prev - 1);
     }
 
-    setTimer(15);
+    resetTimer();
   };
 
   return (
