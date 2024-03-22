@@ -4,7 +4,7 @@ import PageTitle from "../components/common/PageTitle";
 import styled from "@emotion/styled";
 import Button from "../components/common/Button";
 import PlayerInfo from "../components/Game/PlayerInfo";
-import useTimer from "../\bhooks/useTimer";
+import useTimer from "../hooks/useTimer";
 
 const Game = () => {
   const navigate = useNavigate();
