@@ -12,14 +12,26 @@ Tic Tac Toe 게임의 변형입니다. 두 명의 플레이어가 게임을 하�
 - 플레이어가 자신의 차례일 때 15초 이내에 마크를 놓지 않으면, 빈 칸 중 하나에 랜덤하게 마크를 놓고 차례를 넘기게 됩니다.
 - 새 차례가 시작되면 제한 시간은 15초로 초기화 됩니다.
 
-### 📍 기능 설명
-
-- 게임 설정
-- 게임 진행
-- 게임 기록 조회
-
 ### 📍 프로젝트 실행
 
 1. `npm install`
 
 2. `npm run dev`
+
+### 📍 기능 설명
+
+- 홈 화면
+
+<img src="src/assets/home.png" width="400">
+
+- 게임 설정
+
+<img src="src/assets/setting.png" width="400">
+
+- 게임 진행
+
+<img src="src/assets/game.png" width="400">
+
+- 게임 기록 조회
+
+<img src="src/assets/history.png" width="400">
