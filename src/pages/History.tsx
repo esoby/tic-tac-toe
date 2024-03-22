@@ -43,6 +43,7 @@ const History = () => {
                     return (
                       <Cell key={cellIndex} playerColor={playerColor}>
                         {cellMark}
+                        <MoveOrder>{playerIndex > -1 ? playerIndex + 1 : ""}</MoveOrder>
                       </Cell>
                     );
                   })}
@@ -85,11 +86,10 @@ const SmallText = styled.p`
   color: #5b5b5b;
 `;
 
-interface CellProps {
+const Cell = styled.div<{
   playerColor: string;
-}
-
-const Cell = styled.div<CellProps>`
+}>`
+  position: relative;
   width: 100px;
   height: 100px;
   display: flex;
@@ -100,11 +100,17 @@ const Cell = styled.div<CellProps>`
   color: ${(props) => props.playerColor || "black"};
 `;
 
-interface BoardProps {
-  gameSize: number;
-}
+const MoveOrder = styled.span`
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: small;
+  color: #5b5b5b;
+`;
 
-const GameBoard = styled.div<BoardProps>`
+const GameBoard = styled.div<{
+  gameSize: number;
+}>`
   display: grid;
   grid-template-columns: ${(props) => `repeat(${props.gameSize}, 100px)`};
 `;
