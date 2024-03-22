@@ -9,12 +9,19 @@ const Game = () => {
   const { state } = useLocation();
   const [board, setBoard] = useState(Array(state.size * state.size).fill(null));
   const [history, setHistory] = useState<number[]>([]);
-  const [currentPlayer, setCurrentPlayer] = useState(
-    state.firstPlayer === "random" ? "player1" : state.firstPlayer
-  );
   const [player1Undo, setPlayer1Undo] = useState(3);
   const [player2Undo, setPlayer2Undo] = useState(3);
   const [timer, setTimer] = useState(15);
+
+  const [currentPlayer, setCurrentPlayer] = useState(() => {
+    if (state.firstPlayer === "random") {
+      const randomPlayer = Math.random() < 0.5 ? "player1" : "player2";
+      return randomPlayer;
+    } else {
+      return state.firstPlayer;
+    }
+  });
+
   const [gameOver, setGameOver] = useState(false);
 
   // 타이머 로직
