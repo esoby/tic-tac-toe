@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import styled from "@emotion/styled";
 import Button from "../components/common/Button";
+import PlayerInfo from "../components/Game/PlayerInfo";
 
 const Game = () => {
   const navigate = useNavigate();
@@ -139,7 +140,7 @@ const Game = () => {
   };
 
   // 무르기 버튼 클릭
-  const handlerUndoClick = (player: string) => {
+  const handleUndoClick = (player: string) => {
     if (history.length === 0) return;
 
     if (player === "player1" && player1Undo === 0) return;
@@ -167,34 +168,24 @@ const Game = () => {
   return (
     <GameContainer>
       <PageTitle>GAME</PageTitle>
-      <PlayerInfo>
-        <div>
-          <StyledP flag={currentPlayer === "player1"} playerColor={state.player1Color}>
-            Player 1 ({state.player1Mark})
-          </StyledP>
-          <SmallText>남은 무르기 횟수 : {player1Undo}</SmallText>
-          <Button
-            onClick={() => handlerUndoClick("player1")}
-            size="small"
-            disabled={currentPlayer === "player1"}
-          >
-            무르기
-          </Button>
-        </div>
-        <div>
-          <StyledP flag={currentPlayer === "player2"} playerColor={state.player2Color}>
-            Player 2 ({state.player2Mark})
-          </StyledP>
-          <SmallText>남은 무르기 횟수 : {player2Undo}</SmallText>
-          <Button
-            onClick={() => handlerUndoClick("player2")}
-            size="small"
-            disabled={currentPlayer === "player2"}
-          >
-            무르기
-          </Button>
-        </div>
-      </PlayerInfo>
+      <PlayerInfoBlock>
+        <PlayerInfo
+          player="player1"
+          currentPlayer={currentPlayer}
+          playerColor={state.player1Color}
+          playerMark={state.player1Mark}
+          playerUndo={player1Undo}
+          handleUndoClick={handleUndoClick}
+        />
+        <PlayerInfo
+          player="player2"
+          currentPlayer={currentPlayer}
+          playerColor={state.player2Color}
+          playerMark={state.player2Mark}
+          playerUndo={player2Undo}
+          handleUndoClick={handleUndoClick}
+        />
+      </PlayerInfoBlock>
       <div>
         <TimerText>시간 제한 : {timer} seconds</TimerText>
       </div>
@@ -228,21 +219,9 @@ const GameContainer = styled.div`
   gap: 20px;
 `;
 
-const PlayerInfo = styled.div`
+const PlayerInfoBlock = styled.div`
   display: flex;
   gap: 30px;
-`;
-
-const StyledP = styled.p<{ flag: boolean; playerColor: string }>`
-  padding: 8px;
-  border-radius: 5px;
-  color: ${(props) => props.playerColor || "black"};
-  background-color: ${(props) => (props.flag ? "#e7e7e7" : "white")};
-`;
-
-const SmallText = styled.p`
-  font-size: small;
-  color: gray;
 `;
 
 const TimerText = styled.div`
